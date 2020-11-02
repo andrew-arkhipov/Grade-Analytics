@@ -20,7 +20,7 @@ pip install -r requirements.txt
 ```
 
 ### File Structure
-`Reports` holds all grade reports. The target directory is hardcoded in `utils.py`.
+The target directory is hardcoded in `utils.py`, which currently creates a `Records` folder in the current working directory. Change the `SOURCE_DIR` and `TARGET_DIR` variables in `utils.py` to change where downloaded files go.
 
 `utils.py` holds utilities to help with scraping.
 
