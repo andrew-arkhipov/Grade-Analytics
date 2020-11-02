@@ -20,16 +20,19 @@ pip install -r requirements.txt
 ```
 
 ### File Structure
-The target directory is hardcoded in `utils.py`, which currently creates a `Records` folder in the current working directory. 
-- `SOURCE_DIR` is for downloaded files
-- `TARGET_DIR` is where the downloaded files get moved to
+The target directory for downloads is passed in as a positional argument within the bash command.  
 
 `utils.py` holds utilities to help with scraping.
 
 `scraper.py` is the actual script. To run it, use the below command:
 ```
-python scraper.py
+python scraper.py <absolute/path/to/target/directory>
+```
+
+As an example:
+```
+python scraper.py /Users/andrew/Downloads
 ```
 
 ### Tasks
-- [ ] Remove hardcoding from `utils.py`
+- [x] Remove hardcoding from `utils.py`

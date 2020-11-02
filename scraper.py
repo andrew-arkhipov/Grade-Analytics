@@ -1,5 +1,6 @@
 from typing import List
-from utils import wait_for_download
+from utils import download_manager
+from argparse import ArgumentParser
 
 from webdriver_manager.chrome import ChromeDriverManager
 from seleniumrequests.request import RequestMixin
@@ -13,8 +14,14 @@ from selenium.webdriver.chrome.options import Options
 
 class Driver(RequestMixin, webdriver.Chrome):
     @classmethod
-    def initialize(cls) -> 'Driver':
-        return cls(ChromeDriverManager().install())
+    def initialize(cls, target_dir) -> 'Driver':
+        options = Options()
+        prefs = {
+            "download.default_directory": target_dir
+        }
+        setattr(cls, 'download_directory', target_dir)
+        options.add_experimental_option('prefs', prefs)
+        return cls(ChromeDriverManager().install(), options=options)
 
 
 def parse_page(driver: Driver, url: str) -> List[str]:
@@ -54,8 +61,7 @@ def get_links(driver: Driver, url: str) -> List[str]:
 
     return course_links
 
-
-@wait_for_download
+@download_manager
 def download(driver: Driver, url: str) -> None:
     # visit the course page
     driver.get(url)
@@ -67,12 +73,8 @@ def download(driver: Driver, url: str) -> None:
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Export']"))).click()
 
 
-def main():
-    # courses main page
-    url = 'https://onramps.instructure.com/accounts/169964?'
-
+def run(driver, url):
     # initialize
-    driver = Driver.initialize()
     course_links = get_links(driver, url)
     
     # parse
@@ -81,4 +83,15 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # courses main page
+    url = 'https://onramps.instructure.com/accounts/169964?'
+
+    # parse command line arguments
+    parser = ArgumentParser()
+    parser.add_argument("target_dir")
+    args = parser.parse_args()
+
+    # target directory for downloads
+    driver = Driver.initialize(args.target_dir)
+
+    run(driver, url)

@@ -1,23 +1,22 @@
 from time import sleep
+from functools import wraps
 import shutil
 import os
 
 
-def wait_for_download(func):
+def download_manager(func):
 
-    SOURCE_DIR = "/Users/andrew/Downloads"
-    TARGET_DIR = "/Users/andrew/Side Projects/Grade Analytics/Reports"
-
+    @wraps(func)
     def inner(*args, **kwargs):
+        # preprocessing
+        driver = args[0]
+        size = len(os.listdir(driver.download_directory))
+
         # run scraper
         func(*args, **kwargs)
 
         # wait for download to start
-        while not any(filename.endswith(".csv") for filename in os.listdir(SOURCE_DIR)):
-            sleep(0.1)
-
-        # move files
-        for filename in os.listdir(SOURCE_DIR):
-            shutil.move(os.path.join(SOURCE_DIR, filename), TARGET_DIR)
+        while len(os.listdir(driver.download_directory)) == size:
+            sleep(0.05)
 
     return inner
