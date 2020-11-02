@@ -20,7 +20,10 @@ pip install -r requirements.txt
 ```
 
 ### File Structure
-The target directory is hardcoded in `utils.py`, which currently creates a `Records` folder in the current working directory. Change the `SOURCE_DIR` and `TARGET_DIR` variables in `utils.py` to change where downloaded files go.
+The target directory is hardcoded in `utils.py`, which currently creates a `Records` folder in the current working directory. 
+- `SOURCE_DIR` is for downloaded files
+- `TARGET_DIR` is where the downloaded files get moved to
+*TODO: remove hardcoding*
 
 `utils.py` holds utilities to help with scraping.
 
