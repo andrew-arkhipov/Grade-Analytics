@@ -6,7 +6,7 @@ Automated grade analytics for UT OnRamps. <br>
 
 It is highly recommended to use a Python virtual environment when running this script. Run the following commands in the root directory of the project.
 ```
-python3 -m venv <env-folder-name>
+python -m venv <env-folder-name>
 ```
 
 To activate that virtual environment, use the below command:
