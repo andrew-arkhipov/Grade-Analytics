@@ -14,17 +14,15 @@ To activate that virtual environment, use the below command:
 source <env-folder-name>/bin/activate
 ```
 
-After activating, to install the dependencies run:
+After activating, install the dependencies with:
 ```
 pip install -r requirements.txt
 ```
 
-### File Structure
+### Usage
 The target directory for downloads is passed in as a positional argument within the bash command.  
 
-`utils.py` holds utilities to help with scraping.
-
-`scraper.py` is the actual script. To run it, use the below command:
+To use the scraper, run the following command:
 ```
 python scraper.py <absolute/path/to/target/directory>
 ```
@@ -33,6 +31,8 @@ As an example:
 ```
 python scraper.py /Users/andrew/Downloads
 ```
+
+`utils.py` holds utilities to help with scraping.
 
 ### Tasks
 - [x] Remove hardcoding from `utils.py`
