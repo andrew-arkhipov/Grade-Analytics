@@ -3,3 +3,4 @@ venv
 __pycache__
 chromedriver
 Reports
+.DS_Store
