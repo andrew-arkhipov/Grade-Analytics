@@ -91,7 +91,7 @@ if __name__ == "__main__":
     parser.add_argument("target_dir")
     args = parser.parse_args()
 
-    # target directory for downloads
+    # initialize driver with target download directory
     driver = Driver.initialize(args.target_dir)
 
     run(driver, url)
