@@ -22,8 +22,9 @@ pip install -r requirements.txt
 ### File Structure
 `Reports` holds all grade reports. The target directory is hardcoded in `utils.py`.
 
-`selenium_scraper.py` is the actual script. To run it, use the below command:
+`utils.py` holds a utilities to help with scraping.
+
+`scraper.py` is the actual script. To run it, use the below command:
 ```
 python scraper.py
 ```
-
