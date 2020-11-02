@@ -16,7 +16,7 @@ source <env-folder-name>/bin/activate
 
 After activating, to install the dependencies run:
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ### File Structure
