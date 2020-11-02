@@ -1,4 +1,4 @@
-# Grade-Analytics
+# OnRamps Grade Analytics
 Automated grade analytics for UT OnRamps. <br>
 *Note: this is semi-automatic - the code gives you 25 seconds to login to the selenium instance with 2FA.*
 
@@ -31,5 +31,5 @@ The target directory is hardcoded in `utils.py`, which currently creates a `Reco
 python scraper.py
 ```
 
-### TODO
+### Tasks
 - [ ] Remove hardcoding from `utils.py`
