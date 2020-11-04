@@ -28,7 +28,7 @@ python download.py <absolute/path/to/target/directory>
 
 As an example:
 ```
-python scraper.py /Users/andrew/Downloads
+python download.py /Users/andrew/Downloads
 ```
 *Note: the path is not required, and downloads will be sent to the default Downloads directory on your local machine if it is not specified.* 
 
