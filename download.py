@@ -1,7 +1,6 @@
 from typing import List
 from utils.utils import login, parse_page, download_manager
 from utils.driver import Driver
-from utils.courses import Course
 from argparse import ArgumentParser
 
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,7 +12,7 @@ def get_links(driver: Driver, url: str) -> List[str]:
     # get all course links
     course_links = []
     for page in range(1, 8):
-        course_links.extend(parse_page(driver, f"{url}page={str(page)}", Course.COLLEGE))
+        course_links.extend(parse_page(driver, f"{url}page={str(page)}"))
 
     return course_links
 
