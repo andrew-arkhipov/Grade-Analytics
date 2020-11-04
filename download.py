@@ -1,7 +1,7 @@
 from typing import List
-from utils import login, parse_page, download_manager
-from driver import Driver
-from courses import Course
+from utils.utils import login, parse_page, download_manager
+from utils.driver import Driver
+from utils.courses import Course
 from argparse import ArgumentParser
 
 from selenium.webdriver.support.ui import WebDriverWait

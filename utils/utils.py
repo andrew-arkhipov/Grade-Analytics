@@ -1,15 +1,15 @@
 from time import sleep
+from typing import List
 from functools import wraps
 import shutil
 import os
 
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-def login(driver, url):
+def login(driver: 'Driver', url: str):
 
     # get login page
     driver.get(url)
@@ -18,7 +18,7 @@ def login(driver, url):
     WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
 
 
-def parse_page(driver: Driver, url: str, course: Course) -> List[str]:
+def parse_page(driver: 'Driver', url: str, course: 'Course') -> List[str]:
     # get page
     driver.get(url)
 
