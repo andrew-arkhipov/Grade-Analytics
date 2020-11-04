@@ -1,7 +1,6 @@
 from time import sleep
 from typing import List, Callable
 from functools import wraps
-from .course import Course
 import shutil
 import os
 
@@ -19,23 +18,21 @@ def login(driver: 'Driver', url: str):
     WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
 
 
-def parse_page(driver: 'Driver', url: str) -> List[str]:
+def parse_page(driver: 'Driver', url: str, course: 'Course') -> List[str]:
     # get page
     driver.get(url)
 
     # wait for page to load
     WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
 
-    # fetch all links
-    links = []
-    for link in driver.find_elements_by_xpath("//a[@href]"):
-        links.append(link.get_attribute("href"))
+    # fetch all potential courses
+    elements = [elem for elem in driver.find_elements_by_xpath("//a")]
 
     # filter links for valid course numbers
     courses = []
-    for link in links:
-        if Course.valid(link):
-            courses.append(link)
+    for elem in elements:
+        if course.valid(elem):
+            courses.append(elem.get_attribute('href'))
 
     return courses
 

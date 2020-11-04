@@ -1,6 +1,7 @@
 from typing import List, Dict
 from utils.utils import login, parse_page
 from utils.driver import Driver
+from utils.courses import Courses
 from argparse import ArgumentParser
 
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,7 +13,7 @@ def get_links(driver: 'Driver', url: str) -> List[str]:
     # get all course links
     course_links = []
     for page in range(7, 8):
-        course_links.extend(parse_page(driver, f"{url}page={str(page)}"))
+        course_links.extend(parse_page(driver, f"{url}page={str(page)}", Courses.HIGHSCHOOL))
 
     return course_links
 
@@ -25,6 +26,7 @@ def access_survey(driver: 'Driver', url: str) -> bool:
     try:
         WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Student Perspective Survey Fall 1')]"))).click()
     except:
+        # not a valid high school course
         return False
 
     # open survey tab
@@ -92,7 +94,7 @@ if __name__ == "__main__":
 
     # get user inputs
     inputs = {
-        'url': input('Enter Qualtrics Survey URL: '),
+        'url': input('Enter Qualtrics survey URL: '),
         'intro': input('Enter intro text: '),
         'finish': input('Enter finished text: ')
     }
