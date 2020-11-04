@@ -4,22 +4,9 @@ import shutil
 import os
 
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
-
-
-class Driver(webdriver.Chrome):
-    @classmethod
-    def initialize(cls, target_dir="") -> 'Driver':
-        options = Options()
-        if target_dir:
-            prefs = {
-                "download.default_directory": target_dir
-            }
-            options.add_experimental_option('prefs', prefs)
-        setattr(cls, 'download_directory', target_dir)
-        return cls(ChromeDriverManager().install(), options=options)
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 def download_manager(func):

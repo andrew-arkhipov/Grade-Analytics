@@ -1,18 +1,20 @@
 from typing import List
-from utils import download_manager, login, Driver
+from utils import download_manager, login
+from driver import Driver
 from argparse import ArgumentParser
+from courses import Course
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-def parse_page(driver: Driver, url: str) -> List[str]:
+def parse_page(driver: Driver, url: str, course: Course) -> List[str]:
     # get page
     driver.get(url)
 
     # wait for page to load
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
 
     # fetch all links
     links = []
@@ -22,19 +24,17 @@ def parse_page(driver: Driver, url: str) -> List[str]:
     # filter links for valid course numbers
     courses = []
     for link in links:
-        if link[32:37] == "users":
-            break
-        elif link[-1].isdigit() and link[-7].isdigit():
+        if course.valid(link):
             courses.append(link)
 
-    return courses[:-1]
+    return courses
 
 
 def get_links(driver: Driver, url: str) -> List[str]:
     # get all course links
     course_links = []
     for page in range(1, 8):
-        course_links.extend(parse_page(driver, f"{url}page={str(page)}"))
+        course_links.extend(parse_page(driver, f"{url}page={str(page)}", Course.COLLEGE))
 
     return course_links
 
@@ -45,10 +45,10 @@ def download(driver: Driver, url: str) -> None:
     driver.get(url)
 
     # wait for download button
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[@data-component='ActionMenu']"))).click()
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[@data-component='ActionMenu']"))).click()
 
     # download grade report
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Export']"))).click()
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Export']"))).click()
 
 
 def run(driver, url):
