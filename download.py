@@ -1,5 +1,5 @@
 from typing import List
-from utils import download_manager, login
+from utils import login, parse_page, download_manager
 from driver import Driver
 from argparse import ArgumentParser
 from courses import Course
@@ -7,27 +7,6 @@ from courses import Course
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
-
-def parse_page(driver: Driver, url: str, course: Course) -> List[str]:
-    # get page
-    driver.get(url)
-
-    # wait for page to load
-    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
-
-    # fetch all links
-    links = []
-    for link in driver.find_elements_by_xpath("//a[@href]"):
-        links.append(link.get_attribute("href"))
-
-    # filter links for valid course numbers
-    courses = []
-    for link in links:
-        if course.valid(link):
-            courses.append(link)
-
-    return courses
 
 
 def get_links(driver: Driver, url: str) -> List[str]:

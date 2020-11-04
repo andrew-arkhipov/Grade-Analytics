@@ -9,6 +9,36 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
+def login(driver, url):
+
+    # get login page
+    driver.get(url)
+
+    # wait for manual login
+    WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
+
+
+def parse_page(driver: Driver, url: str, course: Course) -> List[str]:
+    # get page
+    driver.get(url)
+
+    # wait for page to load
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
+
+    # fetch all links
+    links = []
+    for link in driver.find_elements_by_xpath("//a[@href]"):
+        links.append(link.get_attribute("href"))
+
+    # filter links for valid course numbers
+    courses = []
+    for link in links:
+        if course.valid(link):
+            courses.append(link)
+
+    return courses
+
+
 def download_manager(func):
 
     @wraps(func)
@@ -25,12 +55,3 @@ def download_manager(func):
             sleep(0.05)
 
     return inner
-
-
-def login(driver, url):
-
-    # get login page
-    driver.get(url)
-
-    # wait for manual login
-    WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
