@@ -21,7 +21,7 @@ pip install -r requirements.txt
 
 ### Usage 
 
-To use the **download scraper**, run the following command:
+To use the **report scraper**, run the following command:
 ```
 python download.py <absolute/path/to/target/directory>
 ```
