@@ -1,5 +1,5 @@
 # OnRamps Grade Analytics
-Automated grade analytics for UT OnRamps. <br>
+Automated tasks for UT OnRamps. <br>
 *Note: this is semi-automatic - the code gives you 25 seconds to login to the selenium instance with 2FA.*
 
 ### Virtual Environment
