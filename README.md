@@ -19,8 +19,7 @@ After activating, install the dependencies with:
 pip install -r requirements.txt
 ```
 
-### Usage
-The target directory for downloads is passed in as a positional argument within the bash command.  
+### Usage 
 
 To use the download scraper, run the following command:
 ```
@@ -31,6 +30,8 @@ As an example:
 ```
 python scraper.py /Users/andrew/Downloads
 ```
+*Note: the path is not required, and downloads will be sent to the default Downloads directory on your local machine if it is not specified.* 
+
 
 To use the survey filler, run the following command:
 ```
