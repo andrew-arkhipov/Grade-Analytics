@@ -1,8 +1,8 @@
 from typing import List
 from utils import login, parse_page, download_manager
 from driver import Driver
-from argparse import ArgumentParser
 from courses import Course
+from argparse import ArgumentParser
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     # parse command line arguments
     parser = ArgumentParser()
-    parser.add_argument("target_dir", nargs='?')
+    parser.add_argument('target_dir', nargs='?')
     args = parser.parse_args()
 
     # initialize driver with target download directory
