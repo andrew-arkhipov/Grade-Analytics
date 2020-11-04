@@ -83,8 +83,8 @@ def run(driver: 'Driver', url: str, inputs: Dict[str, str]) -> None:
 
     # fill out forms
     for link in course_links:
-        flag = access_survey(driver, f"{link}/assignments")
-        if flag:
+        valid_course = access_survey(driver, f"{link}/assignments")
+        if valid_course:
             fill_survey(driver, inputs)
 
 
