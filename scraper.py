@@ -1,27 +1,10 @@
 from typing import List
-from utils import download_manager
+from utils import download_manager, login, Driver
 from argparse import ArgumentParser
 
-from webdriver_manager.chrome import ChromeDriverManager
-from seleniumrequests.request import RequestMixin
-
-from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-
-
-class Driver(RequestMixin, webdriver.Chrome):
-    @classmethod
-    def initialize(cls, target_dir) -> 'Driver':
-        options = Options()
-        prefs = {
-            "download.default_directory": target_dir
-        }
-        setattr(cls, 'download_directory', target_dir)
-        options.add_experimental_option('prefs', prefs)
-        return cls(ChromeDriverManager().install(), options=options)
 
 
 def parse_page(driver: Driver, url: str) -> List[str]:
@@ -48,18 +31,13 @@ def parse_page(driver: Driver, url: str) -> List[str]:
 
 
 def get_links(driver: Driver, url: str) -> List[str]:
-    # get login page
-    driver.get(url)
-
-    # wait for manual login
-    WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
-
     # get all course links
     course_links = []
     for page in range(1, 8):
         course_links.extend(parse_page(driver, f"{url}page={str(page)}"))
 
     return course_links
+
 
 @download_manager
 def download(driver: Driver, url: str) -> None:
@@ -74,6 +52,9 @@ def download(driver: Driver, url: str) -> None:
 
 
 def run(driver, url):
+    # login
+    login(driver, url)
+
     # initialize
     course_links = get_links(driver, url)
     
@@ -88,10 +69,11 @@ if __name__ == "__main__":
 
     # parse command line arguments
     parser = ArgumentParser()
-    parser.add_argument("target_dir")
+    parser.add_argument("target_dir", nargs='?')
     args = parser.parse_args()
 
     # initialize driver with target download directory
     driver = Driver.initialize(args.target_dir)
 
+    # begin scraping
     run(driver, url)
