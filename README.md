@@ -21,7 +21,7 @@ pip install -r requirements.txt
 
 ### Usage 
 
-To use the download scraper, run the following command:
+To use the **download scraper**, run the following command:
 ```
 python download.py <absolute/path/to/target/directory>
 ```
@@ -33,7 +33,7 @@ python scraper.py /Users/andrew/Downloads
 *Note: the path is not required, and downloads will be sent to the default Downloads directory on your local machine if it is not specified.* 
 
 
-To use the survey filler, run the following command:
+To use the **survey filler**, run the following command:
 ```
 python survey.py
 ```
