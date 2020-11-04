@@ -22,15 +22,21 @@ pip install -r requirements.txt
 ### Usage
 The target directory for downloads is passed in as a positional argument within the bash command.  
 
-To use the scraper, run the following command:
+To use the download scraper, run the following command:
 ```
-python scraper.py <absolute/path/to/target/directory>
+python download.py <absolute/path/to/target/directory>
 ```
 
 As an example:
 ```
 python scraper.py /Users/andrew/Downloads
 ```
+
+To use the survey filler, run the following command:
+```
+python survey.py
+```
+*Note: the shell will ask you to input the survey url, intro text, and finished text before running the program.*
 
 `utils.py` holds utilities to help with scraping.
 
