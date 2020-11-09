@@ -12,7 +12,7 @@ from selenium.webdriver.common.by import By
 def get_links(driver: 'Driver', url: str) -> List[str]:
     # get all course links
     course_links = []
-    for page in range(7, 8):
+    for page in range(7, 20):
         course_links.extend(parse_page(driver, f"{url}page={str(page)}", Courses.HIGHSCHOOL))
 
     return course_links
