@@ -15,7 +15,7 @@ def login(driver: 'Driver', url: str):
     driver.get(url)
 
     # wait for manual login
-    WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
+    WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus')]")))
 
 
 def parse_page(driver: 'Driver', url: str, course: 'Course') -> List[str]:
@@ -23,7 +23,7 @@ def parse_page(driver: 'Driver', url: str, course: 'Course') -> List[str]:
     driver.get(url)
 
     # wait for page to load
-    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus - UT COLLEGE')]")))
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, f"//tbody/tr/td/a[contains(text(), '{course.ID}')]")))
 
     # fetch all potential courses
     elements = [elem for elem in driver.find_elements_by_xpath("//a")]
