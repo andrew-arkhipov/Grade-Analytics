@@ -51,6 +51,7 @@ def grade_answers(correct: Tuple[int], answer: Tuple[int]) -> int:
     for potential in answers[correct]:
         grade = max(grade, sum(2 if c - EPSILON <= a <= c + EPSILON else 0 for c, a in zip(potential, answer)))
 
+    print(grade)
     return grade
 
 
@@ -81,7 +82,12 @@ def parse_answers(elems: List[str]) -> (Tuple[int], Tuple[int]):
 
 def grade_student(driver: 'Driver') -> None:
     # get question 7
-    WebDriverWait(driver, 35).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
+    try:
+        WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
+    except:
+        driver.switch_to.default_content()
+        driver.find_element_by_xpath("//i[@class='icon-arrow-right next']").click()
+        return
 
     # determine the version type
     question = driver.find_element_by_xpath("//div/div/span[contains(text(), 'Question 7')]/../..")
@@ -109,20 +115,33 @@ def grade_student(driver: 'Driver') -> None:
     driver.find_element_by_xpath("//i[@class='icon-arrow-right next']").click()
 
 
-def run(driver: 'Driver', url: str) -> None:
-    # login
+def login(driver: 'Driver', url: str) -> None:
+    # get page
     driver.get(url)
 
+    # wait for login
+    WebDriverWait(driver, 35).until(EC.element_to_be_clickable((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
+
+
+def run(driver: 'Driver', url: str, num_students: int) -> None:
+    # login
+    login(driver, url)
+
     # parse
-    grade_student(driver)
+    for _ in range(num_students):
+        grade_student(driver)
+        
 
 
 if __name__ == "__main__":
     # url
-    url = "https://onramps.instructure.com/courses/3018149/gradebook/speed_grader?assignment_id=29655966&student_id=11574757"
+    url = input("Enter url: ")
+
+    # get range of students
+    num_students = int(input("Number of students: "))
 
     # initialize driver
     driver = Driver.initialize()
 
     # run
-    run(driver, url1)
+    run(driver, url, num_students)
