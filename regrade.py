@@ -68,7 +68,7 @@ def parse_answers(elems: List[str]) -> (Tuple[int], Tuple[int]):
             correct[curr-1] = int(eval(elems[i+4]))
             try:
                 answer[curr-1] = float(eval(elems[i+2]))
-            except :
+            except:
                 answer[curr-1] = 0
             curr += 1
 
