@@ -39,6 +39,11 @@ python survey.py
 ```
 *Note: the shell will ask you to input the survey url, intro text, and finished text before running the program.*
 
+To use the **regrade tool** for question 7, run the following command:
+```
+python regrade.py
+```
+
 `utils.py` holds utilities to help with scraping.
 
 ### Tasks
