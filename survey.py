@@ -1,21 +1,11 @@
 from typing import List, Dict
-from utils.utils import login, parse_page
+from utils.utils import login, get_course_type
 from utils.driver import Driver
-from utils.courses import Courses
 from argparse import ArgumentParser
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
-
-def get_links(driver: 'Driver', url: str) -> List[str]:
-    # get all course links
-    course_links = []
-    for page in range(7, 20):
-        course_links.extend(parse_page(driver, f"{url}page={str(page)}", Courses.HIGHSCHOOL))
-
-    return course_links
 
 
 def access_survey(driver: 'Driver', url: str) -> bool:
@@ -74,12 +64,12 @@ def fill_survey(driver: 'Driver', inputs: Dict[str, str]) -> None:
     driver.switch_to.window(driver.window_handles[0])
 
 
-def run(driver: 'Driver', url: str, inputs: Dict[str, str]) -> None:
+def run(driver: 'Driver', url: str, inputs: Dict[str, str], course: 'Course') -> None:
     # login
     login(driver, url)
 
     # get links
-    course_links = get_links(driver, url)
+    course_links = course.get_links(driver, url)
 
     # fill out forms
     for link in course_links:
@@ -99,8 +89,11 @@ if __name__ == "__main__":
         'finish': input('Enter finished text: ')
     }
 
+    # determine course type
+    course = get_course_type()
+
     # initialize driver
     driver = Driver.initialize()
 
     # begin scraping
-    run(driver, url, inputs)
+    run(driver, url, inputs, course)

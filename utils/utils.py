@@ -1,6 +1,8 @@
 from time import sleep
 from typing import List, Callable
 from functools import wraps
+from dataclasses import dataclass
+from utils.courses.courses import HighSchoolCourse, CollegeCourse
 import shutil
 import os
 
@@ -16,25 +18,6 @@ def login(driver: 'Driver', url: str):
 
     # wait for manual login
     WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus')]")))
-
-
-def parse_page(driver: 'Driver', url: str, course: 'Course') -> List[str]:
-    # get page
-    driver.get(url)
-
-    # wait for page to load
-    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, f"//tbody/tr/td/a[contains(text(), '{course.ID}')]")))
-
-    # fetch all potential courses
-    elements = [elem for elem in driver.find_elements_by_xpath("//a")]
-
-    # filter links for valid course numbers
-    courses = []
-    for elem in elements:
-        if course.valid(elem):
-            courses.append(elem.get_attribute('href'))
-
-    return courses
 
 
 def download_manager(func: Callable) -> Callable:
@@ -53,3 +36,23 @@ def download_manager(func: Callable) -> Callable:
             sleep(0.05)
 
     return inner
+
+
+def get_course_type() -> str:
+    # get desired course type from stdin
+    course_type = input("High school or college [HS/CO]: ").lower()
+    while course_type not in {'hs', 'co'}:
+        print('Please enter a valid course type.')
+        course_type = input("High school or college [HS/CO]: ").lower()
+
+    # assign course
+    if course_type == 'hs':
+        course = HighSchoolCourse()
+    else:
+        course = CollegeCourse()
+    
+    return course
+
+
+def parse_csv(filename: str) -> None:
+    pass
