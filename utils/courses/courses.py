@@ -1,13 +1,10 @@
 from typing import List
 from utils.courses.course_utils import GetLinksMixin
 
-class Course:
-    pass
 
-class CollegeCourse(Course, GetLinksMixin):
+class CollegeCourse(GetLinksMixin):
     ID = 'Discovery Precalculus - UT COLLEGE'
 
-    @staticmethod
     def valid(element: 'selenium.webdriver.remote.webelement.WebElement') -> bool:
         text = element.text
         link = element.get_attribute('href')
@@ -21,15 +18,13 @@ class CollegeCourse(Course, GetLinksMixin):
         else:
             return False
 
-    @staticmethod
     def get_links(self, driver: 'Driver', url: str) -> List['CourseDescriptor']:
         return super().get_links(driver, url, range(1, 8),  self.__class__)
         
 
-class HighSchoolCourse(Course, GetLinksMixin):
+class HighSchoolCourse(GetLinksMixin):
     ID = 'Discovery Precalculus - HS'
 
-    @staticmethod
     def valid(element: 'selenium.webdriver.remote.webelement.WebElement') -> bool:
         text = element.text
         link = element.get_attribute('href')
@@ -43,6 +38,5 @@ class HighSchoolCourse(Course, GetLinksMixin):
         else:
             return False
 
-    @staticmethod
     def get_links(self, driver: 'Driver', url: str) -> List['CourseDescriptor']:
         return super().get_links(driver, url, range(7, 20), self.__class__)

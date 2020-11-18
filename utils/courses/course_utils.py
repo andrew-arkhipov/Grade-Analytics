@@ -34,7 +34,7 @@ class GetLinksMixin:
         courses = []
         for elem in elements:
             if course.valid(elem):
-                name = elem.text
+                name = elem.text[24:]
                 link = elem.get_attribute('href')
                 courses.append(CourseDescriptor(name=name, link=link))
 

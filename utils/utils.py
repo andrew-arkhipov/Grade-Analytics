@@ -1,10 +1,11 @@
 from time import sleep
-from typing import List, Callable
+from typing import List, Callable, Dict
 from functools import wraps
 from dataclasses import dataclass
 from collections import defaultdict
 from utils.courses.courses import HighSchoolCourse, CollegeCourse
 import shutil
+import pandas as pd
 import os
 
 from selenium.webdriver.support.ui import WebDriverWait
@@ -58,7 +59,7 @@ def get_course_type() -> str:
 
 def get_unit_number() -> str:
     # get unit number for grading purposes from stdin
-    unit = input("Enter the unit number: ").strip())
+    unit = input("Enter the unit number: ").strip()
 
     # error checking
     while not unit.isdigit():
@@ -75,32 +76,24 @@ class Student:
     multiplier: str
 
 
-def parse_csv(filename: str) -> Dict[str, List['Student']]:
+def get_students(filename: str) -> Dict[str, List['Student']]:
     # dictionary of students
-    students = collections.defaultdict(list)
+    students = defaultdict(list)
 
     with open(filename, "r") as f:
-        # ignore first line
-        _ = f.readline()
+        # get dataframe
+        df = pd.read_csv(filename)
 
         # parse through students
-        for line in f.readlines():
-            line = line.split(',')
-
-            # check if the student has time accommodations
-            if not line[6].startswith("Extended time"):
+        for i, row in df.iterrows():
+            if not row['Accommodation Request'].startswith("Extended time"):
                 continue
 
-            # extract information
-            first = line[1]
-            last = line[2]
-            course = line[5]
-            multiplier = ""
+            # parse through accommodation to get time multipler
+            accom = row['Accommodation Request'].split(" ")
+            multiplier = accom[5][1:-1]
 
-            i = line[6].find("(") + 1
-            while line[6][i] != "x":
-                multiplier += line[6][i]
-
-            students.append(Student(first=first, last=last, multiplier=multiplier))
+            # create new instance of a student
+            students[row['College Course']].append(Student(first=row['Student First Name'], last=row['Student Last Name'], multiplier=multiplier))
 
     return students
