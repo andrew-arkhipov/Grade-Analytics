@@ -12,7 +12,6 @@ from selenium.webdriver.common.by import By
 
 
 def login(driver: 'Driver', url: str):
-
     # get login page
     driver.get(url)
 
