@@ -2,6 +2,7 @@ from time import sleep
 from typing import List, Callable
 from functools import wraps
 from dataclasses import dataclass
+from collections import defaultdict
 from utils.courses.courses import HighSchoolCourse, CollegeCourse
 import shutil
 import os
@@ -53,5 +54,39 @@ def get_course_type() -> str:
     return course
 
 
-def parse_csv(filename: str) -> None:
-    pass
+@dataclass
+class Student:
+    first: str
+    last: str
+    multiplier: str
+
+
+def parse_csv(filename: str) -> Dict[str, List['Student']]:
+    # dictionary of students
+    students = collections.defaultdict(list)
+
+    with open(filename, "r") as f:
+        # ignore first line
+        _ = f.readline()
+
+        # parse through students
+        for line in f.readlines():
+            line = line.split(',')
+
+            # check if the student has time accommodations
+            if not line[6].startswith("Extended time"):
+                continue
+
+            # extract information
+            first = line[1]
+            last = line[2]
+            course = line[5]
+            multiplier = ""
+
+            i = line[6].find("(") + 1
+            while line[6][i] != "x":
+                multiplier += line[6][i]
+
+            students.append(Student(first=first, last=last, multiplier=multiplier))
+
+    return students
