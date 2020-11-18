@@ -123,10 +123,7 @@ def login(driver: 'Driver', url: str) -> None:
     WebDriverWait(driver, 35).until(EC.element_to_be_clickable((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
 
 
-def run(driver: 'Driver', url: str, num_students: int) -> None:
-    # login
-    login(driver, url)
-
+def run(driver: 'Driver', num_students: int) -> None:
     # parse
     for _ in range(num_students):
         grade_student(driver)
@@ -142,6 +139,7 @@ if __name__ == "__main__":
 
     # initialize driver
     driver = Driver.initialize()
+    login(driver, url)
 
     # run
-    run(driver, url, num_students)
+    run(driver, num_students)

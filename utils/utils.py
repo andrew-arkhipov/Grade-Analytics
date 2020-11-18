@@ -41,6 +41,8 @@ def download_manager(func: Callable) -> Callable:
 def get_course_type() -> str:
     # get desired course type from stdin
     course_type = input("High school or college [HS/CO]: ").lower()
+
+    # error checking
     while course_type not in {'hs', 'co'}:
         print('Please enter a valid course type.')
         course_type = input("High school or college [HS/CO]: ").lower()
@@ -52,6 +54,18 @@ def get_course_type() -> str:
         course = CollegeCourse()
     
     return course
+
+
+def get_unit_number() -> str:
+    # get unit number for grading purposes from stdin
+    unit = input("Enter the unit number: ").strip())
+
+    # error checking
+    while not unit.isdigit():
+        print('Please enter a valid unit number.')
+        unit = input("Enter the unit number: ").strip()
+
+    return unit
 
 
 @dataclass

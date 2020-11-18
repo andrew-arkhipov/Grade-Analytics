@@ -12,10 +12,10 @@ class CourseDescriptor:
 
 
 class GetLinksMixin:
-    def get_links(self, driver: 'Driver', url: str, start: int, end: int, course: 'Course') -> List['CourseDescriptor']:
+    def get_links(self, driver: 'Driver', url: str, _range: 'range', course: 'Course') -> List['CourseDescriptor']:
         # get course links
         course_links = []
-        for page in range(start, end):
+        for page in _range:
             course_links.extend(self._parse_page(driver, f"{url}page={str(page)}", course))
 
         return course_links

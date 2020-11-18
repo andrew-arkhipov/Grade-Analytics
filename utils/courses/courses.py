@@ -21,8 +21,9 @@ class CollegeCourse(Course, GetLinksMixin):
         else:
             return False
 
+    @staticmethod
     def get_links(self, driver: 'Driver', url: str) -> List['CourseDescriptor']:
-        return super().get_links(driver, url, 1, 8, self.__class__)
+        return super().get_links(driver, url, range(1, 8),  self.__class__)
         
 
 class HighSchoolCourse(Course, GetLinksMixin):
@@ -42,5 +43,6 @@ class HighSchoolCourse(Course, GetLinksMixin):
         else:
             return False
 
+    @staticmethod
     def get_links(self, driver: 'Driver', url: str) -> List['CourseDescriptor']:
-        return super().get_links(driver, url, 7, 20, self.__class__)
+        return super().get_links(driver, url, range(7, 20), self.__class__)

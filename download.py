@@ -20,10 +20,7 @@ def download(driver: Driver, url: str) -> None:
     WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Export']"))).click()
 
 
-def run(driver: 'Driver', url: str, course: 'Course'):
-    # login
-    login(driver, url)
-
+def run(driver: 'Driver', course: 'Course'):
     # initialize
     course_links = course.get_links(driver, url)
     
@@ -46,6 +43,7 @@ if __name__ == "__main__":
 
     # initialize driver with target download directory
     driver = Driver.initialize(args.target_dir)
+    login(driver, url)
 
     # begin scraping
-    run(driver, url, course)
+    run(driver, course)
