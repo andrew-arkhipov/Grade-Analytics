@@ -8,14 +8,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-def run(driver: 'Driver', filename: str, unit: int, course: 'Course') -> None:
+def run(driver: 'Driver', url: str, filename: str, unit: int, course: 'Course') -> None:
     # get course links
     links = course.get_links()
 
     # parse csv
     students = parse_csv(filename)
 
-    
+
 
 
 if __name__ == "__main__":
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     login(driver, url)
 
     # begin scraping
-    run(driver, args.accom_file, unit, course)    
+    run(driver, url, args.accom_file, unit, course)    

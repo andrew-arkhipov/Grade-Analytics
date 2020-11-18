@@ -64,8 +64,7 @@ def fill_survey(driver: 'Driver', inputs: Dict[str, str]) -> None:
     driver.switch_to.window(driver.window_handles[0])
 
 
-def run(driver: 'Driver', inputs: Dict[str, str], course: 'Course') -> None:
-
+def run(driver: 'Driver', url: str, inputs: Dict[str, str], course: 'Course') -> None:
     # get links
     course_links = course.get_links(driver, url)
 
@@ -95,4 +94,4 @@ if __name__ == "__main__":
     login(driver, url)
 
     # begin scraping
-    run(driver, inputs, course)
+    run(driver, url, inputs, course)
