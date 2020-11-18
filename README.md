@@ -53,7 +53,7 @@ To use the **accomodations tool**, run the following command:
 ```
 python accommodate.py <relative/path/to/accommodations.csv>
 ```
-*Note: the path is required.* 
+*Note: the path is required, and the shell will ask you for the unit number.* 
 
 <br>
 
