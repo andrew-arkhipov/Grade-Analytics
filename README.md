@@ -30,7 +30,9 @@ As an example:
 ```
 python download.py /Users/andrew/Downloads
 ```
-*Note: the path is not required, and downloads will be sent to the default Downloads directory on your local machine if it is not specified.* 
+*Note: the path is not required, and downloads will be sent to the default Downloads directory on your local machine if it is not specified.*
+
+<br>
 
 
 To use the **survey filler**, run the following command:
@@ -39,10 +41,22 @@ python survey.py
 ```
 *Note: the shell will ask you to input the survey url, intro text, and finished text before running the program.*
 
+<br>
+
 To use the **regrade tool** for question 7, run the following command:
 ```
 python regrade.py
 ```
+<br>
+
+To use the **accomodations tool**, run the following command:
+```
+python accommodate.py <relative/path/to/accommodations.csv>
+```
+*Note: the path is required.* 
+
+<br>
+
 
 `utils.py` holds utilities to help with scraping.
 
