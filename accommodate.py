@@ -4,9 +4,6 @@ from utils.driver import Driver
 from utils.courses.courses import CollegeCourse
 from argparse import ArgumentParser
 from math import ceil
-
-from time import sleep
-
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
