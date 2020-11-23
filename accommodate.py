@@ -1,9 +1,9 @@
 from typing import List, Tuple, Dict
-from utils.utils import login, get_students, get_course_type, get_unit_number, get_assignents
+from utils.utils import login, get_students, get_course_type, get_unit_number, get_assignments
 from utils.driver import Driver
 from utils.courses.courses import CollegeCourse
 from argparse import ArgumentParser
-from math import ceild
+from math import ceil
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -23,7 +23,7 @@ def add_extensions(driver: 'Driver', extra_time: int) -> None:
 
 def add_accommodations(driver: 'Driver', assignment_links: List['str'], assignments: List['Assignment'], students: List['Student']) -> None:
     # loop through all assignments
-    for assignment, link in zip(assignment, assignment_links):
+    for assignment, link in zip(assignments, assignment_links):
         # go to exam
         driver.get(f"{link}/moderate")
 
@@ -53,9 +53,9 @@ def add_accommodations(driver: 'Driver', assignment_links: List['str'], assignme
             driver.refresh()
 
 
-def get_assignment_links(driver: 'Driver', assignments: Link['Assignment']) -> List['str']:
+def get_assignment_links(driver: 'Driver', assignments: List['Assignment']) -> List['str']:
     # wait for table with quizzes to load
-    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//h2[@aria-controls='assignment-quizzes']")))
+    WebDriverWait(driver, 4).until(EC.element_to_be_clickable((By.XPATH, "//h2[@aria-controls='assignment-quizzes']")))
 
     # get link for each assignment
     links = []
@@ -67,7 +67,7 @@ def get_assignment_links(driver: 'Driver', assignments: Link['Assignment']) -> L
     return links
 
 
-def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assignments: List['Assignment'] int, course: 'Course') -> None:
+def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assignments: List['Assignment'], course: 'Course') -> None:
     # get course links
     course_links = course.get_links(driver, url)
 
@@ -76,11 +76,8 @@ def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assign
         driver.get(f"{course_link.link}/quizzes")
         assignment_links = get_assignment_links(driver, assignments)
 
-        # part one
-        add_accommodations(driver, assignment_links, assignments, students[link.name])
-
-        # part two
-        add_accommodations(driver, part_two, 30, students[link.name])
+        # add accommodations to each students for the given course
+        add_accommodations(driver, assignment_links, assignments, students[course_link.name])
 
 
 if __name__ == "__main__":
@@ -106,4 +103,4 @@ if __name__ == "__main__":
     login(driver, url)
 
     # begin scraping
-    run(driver, url, students, unit, course)    
+    run(driver, url, students, assignments, course)    

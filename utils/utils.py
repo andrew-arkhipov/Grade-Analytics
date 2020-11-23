@@ -77,21 +77,28 @@ class Assignment:
 
 def get_assignments() -> List['Assignment']:
     # prompt user
-    print("Please enter the names and durations of the assignments you would like to add accommodations to exactly as they appear in Canvas (e.g. Exam Unit 3: Part 2).")
-    print("Press 'q' to indicate all assignments have been added.")
+    print()
+    print("Please enter the names and durations of the assignments you would like to add accommodations to exactly as they appear in Canvas.")
+    print("Enter 'q' into the assignment name to indicate all assignments have been added.")
+    print()
 
     # get first assignment
-    name = input("Assignment name: ")
-    duration = int(input("Duration: "))
+    name = input("Assignment name (e.g. Exam Unit 3: Part 2): ").strip()
+    duration = int(input("Duration (e.g. 30): ").strip())
+    print()
     res = [Assignment(name, duration)]
 
     # continue adding assignments as desired 
-    while name != 'q' and duration != 'q':
-        name = input("Assignment name: ")
-        duration = int(input("Duration: "))
+    while True:
+        name = input("Assignment name: ").strip()
+        if name == 'q':
+            break
+        duration = int(input("Duration: ").strip())
+        print()
         res.append(Assignment(name, duration))
 
     return res
+
 
 @dataclass
 class Student:
