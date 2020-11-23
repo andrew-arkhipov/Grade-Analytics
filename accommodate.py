@@ -1,9 +1,11 @@
 from typing import List, Tuple, Dict
 from utils.utils import login, get_students, get_course_type, get_unit_number
+from utils.utils import Assignment
 from utils.driver import Driver
 from utils.courses.courses import CollegeCourse
 from argparse import ArgumentParser
-from math import ceil
+from math import ceild
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By

@@ -70,6 +70,13 @@ def get_unit_number() -> str:
 
 
 @dataclass
+class Assignment:
+    name: str
+    link: str
+    length: int
+
+
+@dataclass
 class Student:
     first: str
     last: str
