@@ -72,9 +72,26 @@ def get_unit_number() -> str:
 @dataclass
 class Assignment:
     name: str
-    link: str
-    length: int
+    duration: int
 
+
+def get_assignments() -> List['Assignment']:
+    # prompt user
+    print("Please enter the names and durations of the assignments you would like to add accommodations to exactly as they appear in Canvas (e.g. Exam Unit 3: Part 2).")
+    print("Press 'q' to indicate all assignments have been added.")
+
+    # get first assignment
+    name = input("Assignment name: ")
+    duration = int(input("Duration: "))
+    res = [Assignment(name, duration)]
+
+    # continue adding assignments as desired 
+    while name != 'q' and duration != 'q':
+        name = input("Assignment name: ")
+        duration = int(input("Duration: "))
+        res.append(Assignment(name, duration))
+
+    return res
 
 @dataclass
 class Student:
