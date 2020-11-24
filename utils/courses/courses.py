@@ -3,7 +3,7 @@ from utils.courses.course_utils import GetLinksMixin
 
 
 class CollegeCourse(GetLinksMixin):
-    ID = 'Discovery Precalculus - UT COLLEGE'
+    ID = 'UT COLLEGE'
 
     def valid(element: 'selenium.webdriver.remote.webelement.WebElement') -> bool:
         text = element.text
@@ -23,7 +23,7 @@ class CollegeCourse(GetLinksMixin):
         
 
 class HighSchoolCourse(GetLinksMixin):
-    ID = 'Discovery Precalculus - HS'
+    ID = 'HS'
 
     def valid(element: 'selenium.webdriver.remote.webelement.WebElement') -> bool:
         text = element.text
