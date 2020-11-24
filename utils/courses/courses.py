@@ -31,7 +31,7 @@ class HighSchoolCourse(GetLinksMixin):
 
         if link[32:37] == 'users':
             return False
-        elif 'Precalculus - HS' not in text:
+        elif 'HS' not in text:
             return False
         elif link[-1].isdigit() and link[-7].isdigit():
             return True
