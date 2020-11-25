@@ -1,5 +1,5 @@
 from typing import List, Dict
-from utils.utils import login, get_course_type
+from utils.utils import login, get_course_type, get_survey_inputs
 from utils.driver import Driver
 from argparse import ArgumentParser
 
@@ -80,11 +80,7 @@ if __name__ == "__main__":
     url = 'https://onramps.instructure.com/accounts/169964?'
 
     # get user inputs
-    inputs = {
-        'url': input('Enter Qualtrics survey URL: '),
-        'intro': input('Enter intro text: '),
-        'finish': input('Enter finished text: ')
-    }
+    inputs = get_survey_inputs()
 
     # determine course type
     course = get_course_type()

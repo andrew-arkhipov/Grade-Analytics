@@ -4,8 +4,10 @@ from utils.courses.course_utils import GetLinksMixin
 
 class CollegeCourse(GetLinksMixin):
     ID = 'UT COLLEGE'
+    def __init__(self, class_type: 'Classes'):
+        self.class_type = class_type
 
-    def valid(element: 'selenium.webdriver.remote.webelement.WebElement') -> bool:
+    def valid(element: 'WebElement') -> bool:
         text = element.text
         link = element.get_attribute('href')
 
@@ -19,13 +21,15 @@ class CollegeCourse(GetLinksMixin):
             return False
 
     def get_links(self, driver: 'Driver', url: str) -> List['CourseDescriptor']:
-        return super().get_links(driver, url, range(1, 8),  self.__class__)
+        return super().get_links(driver, url, self.class_type['CO'],  self.__class__)
         
 
 class HighSchoolCourse(GetLinksMixin):
     ID = 'HS'
+    def __init__(self, class_type: 'Classes'):
+        self.class_type = class_type
 
-    def valid(element: 'selenium.webdriver.remote.webelement.WebElement') -> bool:
+    def valid(element: 'WebElement') -> bool:
         text = element.text
         link = element.get_attribute('href')
 
@@ -39,4 +43,4 @@ class HighSchoolCourse(GetLinksMixin):
             return False
 
     def get_links(self, driver: 'Driver', url: str) -> List['CourseDescriptor']:
-        return super().get_links(driver, url, range(7, 20), self.__class__)
+        return super().get_links(driver, url, self.class_type['HS'], self.__class__)

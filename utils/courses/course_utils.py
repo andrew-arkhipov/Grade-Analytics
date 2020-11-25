@@ -5,6 +5,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
+class Classes:
+    PC = {'CO': range(1, 8), 'HS': range(7, 20)}
+    CA = {'CO': range(1, 7), 'HS': range(6, 18)}
+
+
 @dataclass
 class CourseDescriptor:
     name: str
@@ -34,7 +39,7 @@ class GetLinksMixin:
         courses = []
         for elem in elements:
             if course.valid(elem):
-                name = elem.text[24:]
+                name = elem.text[elem.text.find('UT'):]
                 link = elem.get_attribute('href')
                 courses.append(CourseDescriptor(name=name, link=link))
 

@@ -4,6 +4,7 @@ from functools import wraps
 from dataclasses import dataclass
 from collections import defaultdict
 from utils.courses.courses import HighSchoolCourse, CollegeCourse
+from utils.courses.course_utils import Classes
 import shutil
 import pandas as pd
 import os
@@ -18,7 +19,7 @@ def login(driver: 'Driver', url: str):
     driver.get(url)
 
     # wait for manual login
-    WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Discovery Precalculus')]")))
+    WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'UT COLLEGE')]")))
 
 
 def download_manager(func: Callable) -> Callable:
@@ -41,18 +42,32 @@ def download_manager(func: Callable) -> Callable:
 
 def get_course_type() -> str:
     # get desired course type from stdin
-    course_type = input("High school or college [HS/CO]: ").lower()
+    course_type = input("High school or college [HS/CO]: ").lower().strip()
 
     # error checking
     while course_type not in {'hs', 'co'}:
         print('Please enter a valid course type.')
-        course_type = input("High school or college [HS/CO]: ").lower()
+        course_type = input("High school or college [HS/CO]: ").lower().strip()
+
+    # get desired class type from stdin
+    classname = input("Precalculus or College Algebra [PC/CA]: ").lower().strip()
+
+    # error checking
+    while course_type not in {'pc', 'ca'}:
+        print('Please enter a valid class type.')
+        course_type = input("Precalculus or College Algebra [PC/CA]: ").lower().strip()
+
+    # assign class
+    if classname == 'pc':
+        class_type = Classes.PC
+    else:
+        class_type = Classes.CA
 
     # assign course
     if course_type == 'hs':
-        course = HighSchoolCourse()
+        course = HighSchoolCourse(class_type)
     else:
-        course = CollegeCourse()
+        course = CollegeCourse(class_type)
     
     return course
 
@@ -67,6 +82,17 @@ def get_unit_number() -> str:
         unit = input("Enter the unit number: ").strip()
 
     return unit
+
+
+def get_survey_inputs() -> Dict[str, str]:
+    # get inputs from stdin
+    inputs = {
+        'url': input('Enter Qualtrics survey URL: '),
+        'intro': input('Enter intro text: '),
+        'finish': input('Enter finished text: ')
+    }
+    
+    return inputs
 
 
 @dataclass

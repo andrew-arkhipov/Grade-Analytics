@@ -82,7 +82,8 @@ def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assign
 
 if __name__ == "__main__":
     # courses main page
-    url = 'https://onramps.instructure.com/accounts/169964?'
+    # url = 'https://onramps.instructure.com/accounts/169964?'
+    url = "https://onramps.instructure.com/accounts/172690?"
 
     # parse command line arguments
     parser = ArgumentParser()
@@ -90,9 +91,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # course type
-    course = CollegeCourse()
+    course = get_course_type()
 
-    # unit number
+    # assignments
     assignments = get_assignments()
 
     # get students
