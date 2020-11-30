@@ -51,9 +51,9 @@ python regrade.py
 
 To use the **accomodations tool**, run the following command:
 ```
-python accommodate.py <relative/path/to/accommodations.csv>
+python accommodate.py
 ```
-*Note: the path is required, and the shell will ask you for the exam names as well as their durations.* 
+*Note: to keep this more general, the shell requires the url of the course page, the names of the assignments (as well as their durations), and the name of the accommodations file. The accommodations file should be in the same directory as the executable to avoid any relative path issues.* 
 
 <br>
 
