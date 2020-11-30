@@ -19,7 +19,7 @@ class CollegeCourse(GetLinksMixin):
             return False
 
     def get_links(self, driver: 'Driver', url: str, _range: 'range') -> List['CourseDescriptor']:
-        return super().get_links(driver, url, _range,self.__class__)
+        return super().get_links(driver, url, _range, self.__class__)
         
 
 class HighSchoolCourse(GetLinksMixin):

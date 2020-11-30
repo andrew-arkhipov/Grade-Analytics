@@ -67,9 +67,9 @@ def get_assignment_links(driver: 'Driver', assignments: List['Assignment']) -> L
     return links
 
 
-def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assignments: List['Assignment'], course: 'Course') -> None:
+def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assignments: List['Assignment'], _range: 'range', course: 'Course') -> None:
     # get course links
-    course_links = course.get_links(driver, url)
+    course_links = course.get_links(driver, url, _range)
 
     for course_link in course_links:
         # access exams
@@ -108,4 +108,4 @@ if __name__ == "__main__":
     login(driver, url)
 
     # begin scraping
-    run(driver, url, students, assignments, course)    
+    run(driver, url, students, assignments, _range, course)    
