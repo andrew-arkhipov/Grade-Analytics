@@ -1,6 +1,5 @@
 from typing import List, Tuple
 from utils.driver import Driver
-from utils.courses import Courses
 from argparse import ArgumentParser
 
 from selenium.webdriver.support.ui import WebDriverWait
