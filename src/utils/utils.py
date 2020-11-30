@@ -7,6 +7,7 @@ from utils.courses.courses import HighSchoolCourse, CollegeCourse
 import shutil
 import pandas as pd
 import os
+import sys
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -138,7 +139,7 @@ def get_students() -> Dict[str, List['Student']]:
     print()
 
     # get dataframe
-    df = pd.read_csv(f"{os.path.dirname(sys.executable)/{filename}")
+    df = pd.read_csv(f"{os.path.dirname(sys.executable)}/{filename}")
 
     # parse through students
     for i, row in df.iterrows():
