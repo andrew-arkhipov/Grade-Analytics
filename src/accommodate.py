@@ -1,7 +1,6 @@
 from typing import List, Tuple, Dict
 from utils.utils import login, get_students, get_course_type, get_unit_number, get_assignments, get_range
 from utils.driver import Driver
-from utils.courses.courses import CollegeCourse
 from argparse import ArgumentParser
 from math import ceil
 
@@ -81,13 +80,6 @@ def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assign
 
 
 if __name__ == "__main__":
-    # parse command line arguments
-    parser = ArgumentParser()
-    parser.add_argument('accom_file', nargs='?')
-    args = parser.parse_args()
-
-    # f = input("Enter accommodations filename: ")
-
     # courses main page
     url = input("Enter url for main page: ")
 
@@ -101,11 +93,11 @@ if __name__ == "__main__":
     assignments = get_assignments()
 
     # get students
-    students = get_students(args.accom_file)
+    students = get_students()
 
     # initialize driver
     driver = Driver.initialize()
     login(driver, url)
 
     # begin scraping
-    run(driver, url, students, assignments, _range, course)    
+    run(driver, url, students, assignments, _range, course) 

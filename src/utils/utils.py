@@ -41,6 +41,7 @@ def download_manager(func: Callable) -> Callable:
 
 def get_course_type() -> str:
     # get desired course type from stdin
+    print()
     course_type = input("High school or college [HS/CO]: ").lower().strip()
 
     # error checking
@@ -113,9 +114,9 @@ def get_assignments() -> List['Assignment']:
 
 def get_range():
     # get range
+    print()
     start = int(input("Enter the first page number of the desired courses: "))
     end = int(input("Enter the last page number of the desired courses: "))
-    print()
 
     return range(start, end + 1)
 
@@ -127,24 +128,28 @@ class Student:
     multiplier: str
 
 
-def get_students(filename: str) -> Dict[str, List['Student']]:
+def get_students() -> Dict[str, List['Student']]:
     # dictionary of students
     students = defaultdict(list)
 
-    with open(filename, "r") as f:
-        # get dataframe
-        df = pd.read_csv(filename)
+    # get filename
+    print()
+    filename = input("Enter the filename of the accommodations csv: ")
+    print()
 
-        # parse through students
-        for i, row in df.iterrows():
-            if not row['Accommodation Request'].startswith("Extended time"):
-                continue
+    # get dataframe
+    df = pd.read_csv(f"{os.path.dirname(sys.executable)/{filename}")
 
-            # parse through accommodation to get time multipler
-            accom = row['Accommodation Request'].split(" ")
-            multiplier = accom[5][1:-1]
+    # parse through students
+    for i, row in df.iterrows():
+        if not row['Accommodation Request'].startswith("Extended time"):
+            continue
 
-            # create new instance of a student
-            students[row['College Course']].append(Student(first=row['Student First Name'], last=row['Student Last Name'], multiplier=multiplier))
+        # parse through accommodation to get time multipler
+        accom = row['Accommodation Request'].split(" ")
+        multiplier = accom[5][1:-1]
+
+        # create new instance of a student
+        students[row['College Course']].append(Student(first=row['Student First Name'], last=row['Student Last Name'], multiplier=multiplier))
 
     return students
