@@ -5,11 +5,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-class Classes:
-    PC = {'CO': range(1, 8), 'HS': range(7, 20)}
-    CA = {'CO': range(1, 7), 'HS': range(6, 18)}
-
-
 @dataclass
 class CourseDescriptor:
     name: str

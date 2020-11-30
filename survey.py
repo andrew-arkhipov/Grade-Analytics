@@ -1,5 +1,5 @@
 from typing import List, Dict
-from utils.utils import login, get_course_type, get_survey_inputs
+from utils.utils import login, get_course_type, get_survey_inputs, get_range
 from utils.driver import Driver
 from argparse import ArgumentParser
 
@@ -64,7 +64,7 @@ def fill_survey(driver: 'Driver', inputs: Dict[str, str]) -> None:
     driver.switch_to.window(driver.window_handles[0])
 
 
-def run(driver: 'Driver', url: str, inputs: Dict[str, str], course: 'Course') -> None:
+def run(driver: 'Driver', url: str, inputs: Dict[str, str], _range: 'range', course: 'Course') -> None:
     # get links
     course_links = course.get_links(driver, url)
 
@@ -85,9 +85,12 @@ if __name__ == "__main__":
     # determine course type
     course = get_course_type()
 
+    # range
+    _range = get_range()
+
     # initialize driver
     driver = Driver.initialize()
     login(driver, url)
 
     # begin scraping
-    run(driver, url, inputs, course)
+    run(driver, url, inputs, _range, course)

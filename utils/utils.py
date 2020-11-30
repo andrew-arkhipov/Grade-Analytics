@@ -4,7 +4,6 @@ from functools import wraps
 from dataclasses import dataclass
 from collections import defaultdict
 from utils.courses.courses import HighSchoolCourse, CollegeCourse
-from utils.courses.course_utils import Classes
 import shutil
 import pandas as pd
 import os
@@ -49,25 +48,11 @@ def get_course_type() -> str:
         print('Please enter a valid course type.')
         course_type = input("High school or college [HS/CO]: ").lower().strip()
 
-    # get desired class type from stdin
-    classname = input("Precalculus or College Algebra [PC/CA]: ").lower().strip()
-
-    # error checking
-    while course_type not in {'pc', 'ca'}:
-        print('Please enter a valid class type.')
-        course_type = input("Precalculus or College Algebra [PC/CA]: ").lower().strip()
-
-    # assign class
-    if classname == 'pc':
-        class_type = Classes.PC
-    else:
-        class_type = Classes.CA
-
     # assign course
     if course_type == 'hs':
-        course = HighSchoolCourse(class_type)
+        course = HighSchoolCourse()
     else:
-        course = CollegeCourse(class_type)
+        course = CollegeCourse()
     
     return course
 
@@ -124,6 +109,16 @@ def get_assignments() -> List['Assignment']:
         res.append(Assignment(name, duration))
 
     return res
+
+
+def get_range():
+    # get range
+    print()
+    start = int(input("Enter the first page number of the desired courses: "))
+    end = int(input("Enter the last page number of the desired courses: "))
+    print()
+
+    return range(start, end + 1)
 
 
 @dataclass

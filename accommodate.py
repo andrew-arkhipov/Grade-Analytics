@@ -1,5 +1,5 @@
 from typing import List, Tuple, Dict
-from utils.utils import login, get_students, get_course_type, get_unit_number, get_assignments
+from utils.utils import login, get_students, get_course_type, get_unit_number, get_assignments, get_range
 from utils.driver import Driver
 from utils.courses.courses import CollegeCourse
 from argparse import ArgumentParser
@@ -82,8 +82,9 @@ def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assign
 
 if __name__ == "__main__":
     # courses main page
-    # url = 'https://onramps.instructure.com/accounts/169964?'
-    url = "https://onramps.instructure.com/accounts/172690?"
+    # url = "https://onramps.instructure.com/accounts/169964?"
+    # url = "https://onramps.instructure.com/accounts/172690?"
+    url = input("Enter url for main page: ")
 
     # parse command line arguments
     parser = ArgumentParser()
@@ -95,6 +96,9 @@ if __name__ == "__main__":
 
     # assignments
     assignments = get_assignments()
+
+    # range
+    _range = get_range()
 
     # get students
     students = get_students(args.accom_file)
