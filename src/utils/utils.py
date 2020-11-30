@@ -113,7 +113,6 @@ def get_assignments() -> List['Assignment']:
 
 def get_range():
     # get range
-    print()
     start = int(input("Enter the first page number of the desired courses: "))
     end = int(input("Enter the last page number of the desired courses: "))
     print()
