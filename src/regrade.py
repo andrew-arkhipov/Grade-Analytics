@@ -82,7 +82,7 @@ def parse_answers(elems: List[str]) -> (Tuple[int], Tuple[int]):
 def grade_student(driver: 'Driver') -> None:
     # get question 7
     try:
-        WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
+        WebDriverWait(driver, 7).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
     except:
         driver.switch_to.default_content()
         driver.find_element_by_xpath("//i[@class='icon-arrow-right next']").click()
@@ -127,7 +127,6 @@ def run(driver: 'Driver', num_students: int) -> None:
     for _ in range(num_students):
         grade_student(driver)
         
-
 
 if __name__ == "__main__":
     # url
