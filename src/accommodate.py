@@ -11,7 +11,7 @@ from selenium.webdriver.common.by import By
 
 def add_extensions(driver: 'Driver', extra_time: int) -> None:
     # find menu and submit time
-    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//input[@id='extension_extra_time']")))
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@id='extension_extra_time']")))
     input_box = driver.find_element_by_xpath("//input[@id='extension_extra_time']")
     input_box.clear()
     input_box.send_keys(extra_time)
@@ -30,7 +30,7 @@ def add_accommodations(driver: 'Driver', assignment_links: List['str'], assignme
         get_extra_time = lambda duration, multiplier: int(ceil(duration * multiplier - duration))
 
         # get utils
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='search_term']")))
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='search_term']")))
 
         # loop through students
         for student in students:
@@ -52,9 +52,12 @@ def add_accommodations(driver: 'Driver', assignment_links: List['str'], assignme
             driver.refresh()
 
 
-def get_assignment_links(driver: 'Driver', assignments: List['Assignment']) -> List['str']:
+def get_assignment_links(driver: 'Driver', url: str, assignments: List['Assignment']) -> List['str']:
+    # get url
+    driver.get(url)
+
     # wait for table with quizzes to load
-    WebDriverWait(driver, 4).until(EC.element_to_be_clickable((By.XPATH, "//h2[@aria-controls='assignment-quizzes']")))
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//h2[@aria-controls='assignment-quizzes']")))
 
     # get link for each assignment
     links = []
@@ -72,8 +75,7 @@ def run(driver: 'Driver', url: str, students: Dict[str, List['Student']], assign
 
     for course_link in course_links:
         # access exams
-        driver.get(f"{course_link.link}/quizzes")
-        assignment_links = get_assignment_links(driver, assignments)
+        assignment_links = get_assignment_links(driver, f"{course_link.link}/quizzes", assignments)
 
         # add accommodations to each students for the given course
         add_accommodations(driver, assignment_links, assignments, students[course_link.name])

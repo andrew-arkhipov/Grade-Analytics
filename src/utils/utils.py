@@ -19,7 +19,7 @@ def login(driver: 'Driver', url: str):
     driver.get(url)
 
     # wait for manual login
-    WebDriverWait(driver, 25).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'UT COLLEGE')]")))
+    WebDriverWait(driver, 35).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'UT COLLEGE')]")))
 
 
 def download_manager(func: Callable) -> Callable:
