@@ -14,18 +14,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-def login(driver: 'Driver', url: str):
+def login(driver, url):
     # get login page
     driver.get(url)
 
     # wait for manual login
-    WebDriverWait(driver, 35).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'UT COLLEGE')]")))
+    WebDriverWait(driver, 35).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), 'UT COLLEGE')]")))
 
 
-def download_manager(func: Callable) -> Callable:
+def download_manager(func):
 
     @wraps(func)
-    def inner(*args, **kwargs) -> None:
+    def inner(*args, **kwargs):
         # preprocessing
         driver = args[0]
         size = len(os.listdir(driver.download_directory))
@@ -40,7 +40,7 @@ def download_manager(func: Callable) -> Callable:
     return inner
 
 
-def get_course_type() -> str:
+def get_course_type():
     # get desired course type from stdin
     print()
     course_type = input("High school or college [HS/CO]: ").lower().strip()
@@ -59,7 +59,7 @@ def get_course_type() -> str:
     return course
 
 
-def get_unit_number() -> str:
+def get_unit_number():
     # get unit number for grading purposes from stdin
     unit = input("Enter the unit number: ").strip()
 
@@ -71,7 +71,7 @@ def get_unit_number() -> str:
     return unit
 
 
-def get_survey_inputs() -> Dict[str, str]:
+def get_survey_inputs():
     # get inputs from stdin
     inputs = {
         'url': input('Enter Qualtrics survey URL: '),
@@ -88,7 +88,7 @@ class Assignment:
     duration: int
 
 
-def get_assignments() -> List['Assignment']:
+def get_assignments():
     # prompt user
     print()
     print("Please enter the names and durations of the assignments you would like to add accommodations to exactly as they appear in Canvas.")
@@ -121,7 +121,6 @@ def get_range():
 
     return range(start, end + 1)
 
-
 @dataclass
 class Student:
     first: str
@@ -129,7 +128,7 @@ class Student:
     multiplier: str
 
 
-def get_students() -> Dict[str, List['Student']]:
+def get_students():
     # dictionary of students
     students = defaultdict(list)
 
@@ -140,6 +139,7 @@ def get_students() -> Dict[str, List['Student']]:
 
     # get dataframe
     df = pd.read_csv(f"{os.path.dirname(sys.executable)}/{filename}")
+    # df = pd.read_csv(filename)
 
     # parse through students
     for i, row in df.iterrows():

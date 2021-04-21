@@ -82,29 +82,24 @@ def parse_answers(elems: List[str]) -> (Tuple[int], Tuple[int]):
 def grade_student(driver: 'Driver') -> None:
     # get question 7
     try:
-        WebDriverWait(driver, 7).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
+        WebDriverWait(driver, 1.5).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
     except:
         driver.switch_to.default_content()
         driver.find_element_by_xpath("//i[@class='icon-arrow-right next']").click()
         return
 
     # determine the version type
-    question = driver.find_element_by_xpath("//div/div/span[contains(text(), 'Question 7')]/../..")
+    question = driver.find_element_by_xpath("//div/div/span[contains(text(), 'Question 1')]/../..")
+    score = int(question.find_element_by_xpath("//div[@class='header']/span/div[@class='user_points']/input[@class='question_input']").get_attribute('value'))
 
-    words = []
-    for elem in question.find_elements_by_class_name("answer_group"):
-        words.extend(elem.text.split("\n"))
+    if score == 0:
+        total = float(driver.find_element_by_xpath("//span[@class='score_value']").text)
 
-    # get the answers in a readable format
-    correct, answer = parse_answers(words)
+        fudge = driver.find_element_by_xpath("//input[@id='fudge_points_entry']")
+        fudge.clear()
 
-    # grade answers
-    grade = grade_answers(correct, answer)
-
-    # input grade
-    grade_input = driver.find_element_by_xpath("//div/div/span[contains(text(), 'Question 7')]/../span[@class='question_points_holder']/div[@class='user_points']/input[@class='question_input']")
-    grade_input.clear()
-    grade_input.send_keys(grade)
+        points = round(round(total * 10/9, 2) - total, 2)
+        fudge.send_keys(str(points))
 
     # submit
     driver.find_element_by_xpath("//button[@class='btn btn-primary update-scores']").click()
@@ -119,7 +114,7 @@ def login(driver: 'Driver', url: str) -> None:
     driver.get(url)
 
     # wait for login
-    WebDriverWait(driver, 35).until(EC.element_to_be_clickable((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
+    WebDriverWait(driver, 50).until(EC.element_to_be_clickable((By.XPATH, "//iframe[@id='speedgrader_iframe']")))
 
 
 def run(driver: 'Driver', num_students: int) -> None:

@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class Driver(webdriver.Chrome):
     @classmethod
-    def initialize(cls, target_dir="") -> 'Driver':
+    def initialize(cls, target_dir=""):
         options = Options()
         if target_dir:
             prefs = {

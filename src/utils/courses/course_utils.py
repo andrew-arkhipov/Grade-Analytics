@@ -25,7 +25,7 @@ class GetLinksMixin:
         driver.get(url)
 
         # wait for page to load
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, f"//tbody/tr/td/a[contains(text(), '{course.ID}')]")))
+        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, f"//tbody/tr/td/a/span[contains(text(), '{course.ID}')]")))
 
         # fetch all potential courses
         elements = [elem for elem in driver.find_elements_by_xpath("//a")]

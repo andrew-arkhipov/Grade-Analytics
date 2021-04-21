@@ -1,6 +1,9 @@
 venv
+venv2
+env
 .vscode
 __pycache__
+.__init__.pyc
 chromedriver
 Reports
 .DS_Store
@@ -8,3 +11,7 @@ Reports
 accommodations.csv
 CA_accommodations.csv
 executable
+accommodate.spec
+dist
+build
+accommodate
