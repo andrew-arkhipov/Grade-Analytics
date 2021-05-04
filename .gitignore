@@ -1,9 +1,10 @@
 venv
 venv2
 env
+build
 .vscode
 __pycache__
-.__init__.pyc
+__init__.pyc
 chromedriver
 Reports
 .DS_Store
