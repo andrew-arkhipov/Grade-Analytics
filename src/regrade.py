@@ -173,16 +173,25 @@ def run(driver: 'Driver', num_students: int) -> None:
             driver.switch_to.default_content()
             driver.find_element_by_xpath("//i[@class='icon-arrow-right next']").click()
             continue
-        
 
-if __name__ == "__main__":
+def test():
+    url = "https://onramps.instructure.com/courses/3018432/gradebook/speed_grader?assignment_id=28393321&student_id=11553403"
+
+    driver = Driver.initialize()
+    driver.get(url)
+    sleep(30)
+
+    run(driver, 71)
+
+
+def main():
     url = "https://onramps.instructure.com/accounts/172690?"
 
     driver = Driver.initialize()
     login(driver, url)
 
     course = CollegeCourse()
-    links = course.get_links(driver, url, range(6, 7))
+    links = course.get_links(driver, url, range(2, 3))
 
     # run
     for link in links:
@@ -190,3 +199,7 @@ if __name__ == "__main__":
         run(driver, num_students)
         driver.close()
         driver.switch_to.window(driver.window_handles[0])
+        
+
+if __name__ == "__main__":
+    main()
