@@ -45,6 +45,17 @@ answers = {
     ]
 }
 
+assignments = [
+    "Unit 7 Part 1",
+    "Unit 7 Part 2",
+    "Unit 7 Part 3",
+    "Homework: Unit 8",
+    "Unit 9 Part 1",
+    "Unit 9 Part 2",
+    "Unit 9 Part 3",
+    "Unit 9 Part 4"
+]
+
 
 def grade_answers(correct: Tuple[int], answer: Tuple[int]) -> int:
     # error constant
@@ -91,16 +102,21 @@ def grade_student(driver: 'Driver') -> None:
     question = driver.find_element_by_xpath("//div/div/span[contains(text(), 'Question 1') or contains(text(), 'Pregunta 1')]/../..")
     score = int(question.find_element_by_xpath("//div[@class='header']/span/div[@class='user_points']/input[@class='question_input']").get_attribute('value'))
 
-    if score == 0:
-        total = float(driver.find_element_by_xpath("//span[@class='score_value']").text)
+    total = float(driver.find_element_by_xpath("//span[@class='score_value']").text)
+    if 0.99 < total < 1.01:
+        driver.switch_to.default_content()
+        driver.find_element_by_xpath("//i[@class='icon-arrow-right next']").click()
 
-        fudge = driver.find_element_by_xpath("//input[@id='fudge_points_entry']")
-        current_fudge = float(fudge.get_attribute('value') or 0)
-
+    fudge = driver.find_element_by_xpath("//input[@id='fudge_points_entry']")
+    current_fudge = float(fudge.get_attribute('value') or 0)
+    
+    if current_fudge < 0:
         fudge.clear()
+        fudge.send_keys("0")
 
-        points = round(round((total - current_fudge) * 10/9, 2) - (total - current_fudge), 2)
-        fudge.send_keys(str(points))
+        # points = round(round((total - current_fudge) * 10/9, 2) - (total - current_fudge), 2)
+        # fudge.send_keys(str(points))
+
 
     # submit
     driver.find_element_by_xpath("//button[@class='btn btn-primary update-scores']").click()
@@ -129,11 +145,12 @@ def show_all_sections(driver) -> None:
     action.perform()
 
 
-def access_assignment(driver: 'Driver', url: str) -> int:
+def access_assignment(driver: 'Driver', url: str, assignment: str = "7 & 8") -> int:
+
     driver.get(url)
 
     try:
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), '7 & 8')]"))).click()
+        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, f"//a[contains(text(), '{assignment}')]"))).click()
     except:
         # not a valid high school course
         return 0
@@ -191,14 +208,23 @@ def main():
     login(driver, url)
 
     course = CollegeCourse()
-    links = course.get_links(driver, url, range(2, 3))
+    links = course.get_links(driver, url, range(5, 7))
+    already_done_links = {
+        "https://onramps.instructure.com/courses/3018480",
+        "https://onramps.instructure.com/courses/3018531",
+        "https://onramps.instructure.com/courses/3018535"
+    }
 
     # run
-    for link in links:
-        num_students = access_assignment(driver, f"{link.link}/assignments")
-        run(driver, num_students)
-        driver.close()
-        driver.switch_to.window(driver.window_handles[0])
+    for assignment in assignments:
+        for link in links:
+            if link.link in already_done_links:
+                continue
+            num_students = access_assignment(driver, f"{link.link}/assignments", assignment)
+            if num_students > 0:
+                run(driver, num_students)
+                driver.close()
+                driver.switch_to.window(driver.window_handles[0])
         
 
 if __name__ == "__main__":
